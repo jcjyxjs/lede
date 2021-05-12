@@ -60,7 +60,7 @@ add_cron() {
 # Run Script
 
 notify() {
-    grep "Cookie失效" ${LOG_FILE} >/dev/null
+    grep "】:  Cookie失效" ${LOG_FILE} >/dev/null
     if [ $? -eq 0 ]; then
         title="$(date '+%Y年%m月%d日') 京东签到 Cookie 失效"
     else
@@ -77,6 +77,14 @@ notify() {
         fi
         wget-ssl -q --output-document=/dev/null --post-data="text=$title~&desp=$desc" $serverurl$sckey.send
     fi
+    
+    #Dingding
+    dtoken=$(uci_get_by_type global dd_token)
+    if [ ! -z $dtoken ]; then
+    	DTJ_FILE=/tmp/jd-djson.json
+	echo "{\"msgtype\": \"markdown\",\"markdown\": {\"title\":\"${title}\",\"text\":\"${title} <br/> ${desc}\"}}" > ${DTJ_FILE}
+    	wget-ssl -q --output-document=/dev/null --header="Content-Type: application/json" --post-file=/tmp/jd-djson.json "https://oapi.dingtalk.com/robot/send?access_token=${dtoken}"
+    fi
 
     #telegram
     TG_BOT_TOKEN=$(uci_get_by_type global tg_token)
@@ -87,7 +95,7 @@ notify() {
         
 \`\`\`
 "$desc"
-====================================
+===============================
 本消息来自京东签到插件 jd-dailybonus
 \`\`\`"
         wget-ssl -q --output-document=/dev/null --post-data="chat_id=$TG_USER_ID&text=$text&parse_mode=markdownv2" $API_URL
