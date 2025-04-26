@@ -26,5 +26,5 @@ jobs:
           git remote add upstream https://github.com/coolsnowwolf/lede.git  # 将原始仓库的地址添加为 upstream
           git fetch upstream
           git checkout master  # 或者根据你的默认分支修改，例如 master
-          git merge upstream/master  # 合并 upstream 的 main 分支（或 master）
+          git merge upstream/master --allow-unrelated-histories # 合并 upstream 的 main 分支（或 master）
           git push origin master  # 将更新推送到你的 fork 仓库
