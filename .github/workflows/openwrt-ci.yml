@@ -9,7 +9,7 @@ name: OpenWrt-CI
 
 on:
   schedule:
-    - cron: 59 12 * * * # 12:00 PM UTC，相当于中国时间晚上8点
+    - cron: 5 13 * * * # 12:00 PM UTC，相当于中国时间晚上8点
   workflow_dispatch:
 
 permissions:
