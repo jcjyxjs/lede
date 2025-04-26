@@ -10,21 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 检出你的仓库
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 配置 Git 用户信息
       - name: Set up Git
         run: |
-          git config --global user.name "jcjyxjs"  # 替换为你的 GitHub 用户名
-          git config --global user.email "jcjyxjs@qq.com"  # 替换为你的邮箱地址
+          git config --global user.name "jcjyxjs"
+          git config --global user.email "jcjyxjs@qq.com"
 
-      # 添加 upstream 仓库并同步
       - name: Sync fork with upstream
         run: |
-          git remote add upstream https://github.com/coolsnowwolf/lede.git  # 将原始仓库的地址添加为 upstream
+          git remote add upstream https://github.com/coolsnowwolf/lede.git
           git fetch upstream
-          git checkout master  # 或者根据你的默认分支修改，例如 master
-          git merge upstream/master --allow-unrelated-histories # 合并 upstream 的 main 分支（或 master）
-          git push origin master  # 将更新推送到你的 fork 仓库
+          git checkout master
+          git merge upstream/master --allow-unrelated-histories
+          git push origin master
